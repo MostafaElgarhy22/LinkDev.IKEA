@@ -1,0 +1,25 @@
+[{
+        "code": "DEP3030",
+        "name": "Sales",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+        "creationDate": "10/10/2010",
+        "createdBy": "",
+        "lastModifiedBy": ""
+    },
+    {
+        "code": "DEP2020",
+        "name": "Media",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+        "creationDate": "08/22/2000",
+        "createdBy": "",
+        "lastModifiedBy": ""
+    },
+    {
+        "code": "DEP4040",
+        "name": "Markting",
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+        "creationDate": "01/19/2005",
+        "createdBy": "",
+        "lastModifiedBy": ""
+    }
+]

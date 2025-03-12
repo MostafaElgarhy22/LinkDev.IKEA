@@ -1,11 +1,16 @@
 using LinkDev.IKEA.DAL;
+using LinkDev.IKEA.DAL.Contracts;
 using LinkDev.IKEA.DAL.Persistence.Data;
+using LinkDev.IKEA.PL.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace LinkDev.IKEA.PL
 {
     public class Program
     {
+
+    
+
         //Entry point of the application.
         public static void Main(string[] args)
         {
@@ -21,6 +26,10 @@ namespace LinkDev.IKEA.PL
             #endregion
 
             var app = builder.Build();
+
+            #region Database Initialization
+            app.InitializeDatabase(); 
+            #endregion
 
             #region Configure HTTP Request Pipelines
 
