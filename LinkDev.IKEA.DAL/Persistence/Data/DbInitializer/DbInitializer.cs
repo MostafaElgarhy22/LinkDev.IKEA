@@ -31,7 +31,7 @@ namespace LinkDev.IKEA.DAL.Persistence.Data.DbInitializer
 
             if (_dbcontext.Departments.Any())
             {
-                var departmentsData = File.ReadAllText("/LinkDev.IKEA.DAL/Persistence/Data/Seeds/departments.json");
+                var departmentsData = File.ReadAllText("Persistence/Data/Seeds/departments.json");
                 var departments = JsonSerializer.Deserialize<List<Department>>(departmentsData);
 
                 if (departments?.Count > 0)

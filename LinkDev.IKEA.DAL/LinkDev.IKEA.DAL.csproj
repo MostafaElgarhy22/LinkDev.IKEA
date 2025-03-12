@@ -10,7 +10,6 @@
     <Folder Include="Common\Enums\" />
     <Folder Include="Persistence\Data\Migrations\" />
     <Folder Include="Persistence\UnitOfWork\" />
-    <Folder Include="Persistence\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
