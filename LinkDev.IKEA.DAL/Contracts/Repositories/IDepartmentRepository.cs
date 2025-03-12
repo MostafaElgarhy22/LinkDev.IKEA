@@ -13,12 +13,12 @@ namespace LinkDev.IKEA.DAL.Contracts.Repositories
 
         IEnumerable<Department> GetAll(bool withTracking = false);
 
-        Department Get(int id);
+        Department? Get(int id);
 
-        int Add(Department entity);
+        void Add(Department entity);
 
-        int Update(Department entity);
+        void Update(Department entity);
 
-        int Delete(int id);
+        void Delete(int id);
     }
 }
