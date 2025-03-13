@@ -19,6 +19,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #endregion
 
+        #region Index
         [HttpGet] //Get: /Department/Index
         public IActionResult Index()
         {
@@ -35,5 +36,35 @@ namespace LinkDev.IKEA.PL.Controllers
 
             return View(departmentViewModels);
         }
+        #endregion
+
+        #region Details
+        [HttpGet] //Get: /Department/Details/id
+        public IActionResult Details(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest(); //400
+
+            var department = _departmentService.GetDepartmentById(id.Value);
+
+            if (department == null)
+                return NotFound(); //404
+
+            var departmentViewModel = new DepartmentsDetailsViewModel()
+            {
+                Code = department.Code,
+                Name = department.Name,
+                Description = department.Description ?? "",
+                CreationDate = department.CreationDate,
+                CreatedBy = department.CreatedBy,
+                CreatedOn = department.CreatedOn,
+                LastModifiedBy = department.LastModifiedBy,
+                LastModifiedOn = department.LastModifiedOn
+            };
+
+
+            return View(departmentViewModel);
+        }
+        #endregion
     }
 }
