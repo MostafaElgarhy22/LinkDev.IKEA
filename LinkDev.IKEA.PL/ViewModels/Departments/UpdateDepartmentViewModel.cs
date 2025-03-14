@@ -2,8 +2,10 @@
 
 namespace LinkDev.IKEA.PL.ViewModels.Departments
 {
-    public class CreateDepartmentViewModel
+    public class UpdateDepartmentViewModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Code is required ya Hamada")]
         public required string Code { get; set; }
         public required string Name { get; set; }

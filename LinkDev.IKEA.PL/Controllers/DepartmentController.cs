@@ -84,13 +84,11 @@ namespace LinkDev.IKEA.PL.Controllers
         [HttpPost]
         public IActionResult Create(CreateDepartmentViewModel model)
         {
+            if (!ModelState.IsValid) //Server side validation
+                return View(model);
             var message = "Department created successfully";
             try
             {
-                if (!ModelState.IsValid) //Server side validation
-                    return View(model);
-
-       
                 var departmentToCreate = new CreateDepartmentDto(model.Code, model.Name, model.Description, model.CreationDate);
 
                 var created = _departmentService.CreateDepartment(departmentToCreate) > 0;
@@ -105,6 +103,75 @@ namespace LinkDev.IKEA.PL.Controllers
                 // 2. Set Message
                 message = "An error occurred while creating the department";
 
+            }
+
+            TempData["Message"] = message;
+            return RedirectToAction(nameof(Index));
+        }
+        #endregion
+
+        #region Update
+
+        [HttpGet] //Get: /Department/Edit/id
+
+        public IActionResult Edit(int? id)
+        {
+            if(!id.HasValue)
+                return BadRequest(); //400
+
+            var department = _departmentService.GetDepartmentById(id.Value);
+
+            if (department is null)
+                return NotFound(); //404
+
+            var departmentViewModel = new UpdateDepartmentViewModel()
+            {
+                Id = department.Id,
+                Code = department.Code,
+                Name = department.Name,
+                Description = department.Description ?? "",
+                CreationDate = department.CreationDate
+            };
+
+            TempData["Id"] = id;
+
+            return View(department);
+        }
+
+        [HttpPost] //Post: /Department/Edit/id
+
+        public IActionResult Edit ([FromRoute] int id, UpdateDepartmentViewModel model)
+        {
+            if (((int?)TempData["Id"]) != id)
+            {
+                //BadRequest();
+                ModelState.AddModelError("Id", "Invalid Id");
+                return View(model);
+            }
+                
+
+            if (!ModelState.IsValid)
+                return View(model);
+
+
+            var message = "Department updated successfully";
+            try
+            {
+
+                var departmentToUpdate = new UpdateDepartmentDto(id, model.Code, model.Name, model.Description, model.CreationDate);
+
+                var updated = _departmentService.UpdateDepartment(departmentToUpdate) > 0;
+
+                if (!updated)
+                    message = "Failed to update department";
+            }
+            catch (Exception ex)
+            {
+
+                // 1. Log Exception in Database or External File (By Serialog Package)
+                _logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                // 2. Set Message
+                message = "An error occurred while creating the department";
             }
 
             TempData["Message"] = message;
