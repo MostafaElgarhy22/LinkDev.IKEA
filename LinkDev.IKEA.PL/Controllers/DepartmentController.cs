@@ -16,7 +16,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
 
 
-        public DepartmentController(ILogger <DepartmentController> logger, IDepartmentService departmentService)
+        public DepartmentController(ILogger<DepartmentController> logger, IDepartmentService departmentService)
         {
             _logger = logger;
             _departmentService = departmentService;
@@ -45,7 +45,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         #region Details
         [HttpGet] //Get: /Department/Details/id
-        public IActionResult Details(int? id)
+        public IActionResult Details(int? id, string viewName = "Details")
         {
             if (!id.HasValue)
                 return BadRequest(); //400
@@ -57,6 +57,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
             var departmentViewModel = new DepartmentsDetailsViewModel()
             {
+                Id = id.Value,
                 Code = department.Code,
                 Name = department.Name,
                 Description = department.Description ?? "",
@@ -68,7 +69,7 @@ namespace LinkDev.IKEA.PL.Controllers
             };
 
 
-            return View(departmentViewModel);
+            return View(viewName, departmentViewModel);
         }
         #endregion
 
@@ -116,7 +117,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(!id.HasValue)
+            if (!id.HasValue)
                 return BadRequest(); //400
 
             var department = _departmentService.GetDepartmentById(id.Value);
@@ -140,7 +141,7 @@ namespace LinkDev.IKEA.PL.Controllers
 
         [HttpPost] //Post: /Department/Edit/id
 
-        public IActionResult Edit ([FromRoute] int id, UpdateDepartmentViewModel model)
+        public IActionResult Edit([FromRoute] int id, UpdateDepartmentViewModel model)
         {
             if (((int?)TempData["Id"]) != id)
             {
@@ -148,7 +149,7 @@ namespace LinkDev.IKEA.PL.Controllers
                 ModelState.AddModelError("Id", "Invalid Id");
                 return View(model);
             }
-                
+
 
             if (!ModelState.IsValid)
                 return View(model);
@@ -178,5 +179,32 @@ namespace LinkDev.IKEA.PL.Controllers
             return RedirectToAction(nameof(Index));
         }
         #endregion
+
+        #region Delete 
+
+
+        [HttpPost] //Post: /Department/Delete/id
+
+        public IActionResult Delete(int id)
+        {
+            var message = "Department deleted successfully";
+            try
+            {
+                var deleted = _departmentService.DeleteDepartment(id);
+                if (!deleted)
+                    message = "Failed to delete department";
+            }
+            catch (Exception ex)
+            {
+                // 1. Log Exception in Database or External File (By Serialog Package)
+                _logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                // 2. Set Message
+                message = "An error occurred while creating the department";
+            }
+
+            TempData["Message"] = message;
+            return RedirectToAction(nameof(Index));
+            #endregion
+        }
     }
 }

@@ -63,11 +63,39 @@
 						</a>
 					</td>
 					<td>
-						<a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
+					@* 	<a asp-controller="Department" asp-action="Delete" asp-route-id="@department.Id" class="btn btn-danger">
 							<i class="fas fa-trash"></i> Delete
-						</a>
+						</a> *@
+						<button type="button" class="btn btn-danger" data-bs-toggle="model" data-bs-target="#deleteModel">
+							<i class="fas fa-trash"></i> Delete
+						</button>
 					</td>
 				</tr>
+
+				<!--Model-->
+				<div class="model fade" id="deleteModel" tabindex="-1" aria-labelledby="exampleModelLabel" aria-hidden="true">
+					<div class="model-dialog">
+						<div class="model align-content">
+							<div class="model-header">
+								<h1 class="model-title fs-5" id="exampleModelLabel">Delete Department</h1>
+								<button type="button" class="btn-close" data-bs-dismiss="model" aria-label="Close"></button>
+							</div>
+							<div class="model-body">
+								Are You Sure to Delete this Department ?
+							</div>
+							<div class="modal-footer">
+								<form asp-action="Delete" asp-route-id="@department.Id">
+									<button type="button" class="btn btn-secondary" data-bs-dismiss="model">Cancel</button>
+									<input type="submit" value="Delete" class="btn btn-danger" >
+								</form>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
 			}
 		</tbody>
 
@@ -81,3 +109,5 @@ else
 	     <p> There is no Departments :( </p>
 	</div>
 }
+
+
