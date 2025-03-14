@@ -1,4 +1,5 @@
-﻿using LinkDev.IKEA.BLL.Services.Departments;
+﻿using LinkDev.IKEA.BLL.Models.Departments;
+using LinkDev.IKEA.BLL.Services.Departments;
 using LinkDev.IKEA.PL.ViewModels.Departments;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -11,9 +12,13 @@ namespace LinkDev.IKEA.PL.Controllers
     {
         #region Services
         private readonly IDepartmentService _departmentService;
+        private readonly ILogger<DepartmentController> _logger;
 
-        public DepartmentController(IDepartmentService departmentService)
+
+
+        public DepartmentController(ILogger <DepartmentController> logger, IDepartmentService departmentService)
         {
+            _logger = logger;
             _departmentService = departmentService;
         }
 
@@ -64,6 +69,46 @@ namespace LinkDev.IKEA.PL.Controllers
 
 
             return View(departmentViewModel);
+        }
+        #endregion
+
+        #region Create
+
+        [HttpGet] //Get: /Department/Create
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateDepartmentViewModel model)
+        {
+            var message = "Department created successfully";
+            try
+            {
+                if (!ModelState.IsValid) //Server side validation
+                    return View(model);
+
+       
+                var departmentToCreate = new CreateDepartmentDto(model.Code, model.Name, model.Description, model.CreationDate);
+
+                var created = _departmentService.CreateDepartment(departmentToCreate) > 0;
+
+                if (created)
+                    message = "Failed to create department";
+            }
+            catch (Exception ex)
+            {
+                // 1. Log Exception in Database or External File (By Serialog Package)
+                _logger.LogError(ex.Message, ex.StackTrace!.ToString());
+                // 2. Set Message
+                message = "An error occurred while creating the department";
+
+            }
+
+            TempData["Message"] = message;
+            return RedirectToAction(nameof(Index));
         }
         #endregion
     }
