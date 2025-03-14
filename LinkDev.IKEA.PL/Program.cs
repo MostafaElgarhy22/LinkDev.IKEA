@@ -1,11 +1,13 @@
+using LinkDev.IKEA.BLL;
 using LinkDev.IKEA.DAL;
-using LinkDev.IKEA.DAL.Persistence.Data;
-using Microsoft.EntityFrameworkCore;
-
+using LinkDev.IKEA.PL.Extensions;
 namespace LinkDev.IKEA.PL
 {
     public class Program
     {
+
+    
+
         //Entry point of the application.
         public static void Main(string[] args)
         {
@@ -18,9 +20,14 @@ namespace LinkDev.IKEA.PL
 
             builder.Services.AddPersistenceServices(builder.Configuration);
 
+            builder.Services.AddApplicationServices();
             #endregion
 
             var app = builder.Build();
+
+            #region Database Initialization
+            app.InitializeDatabase(); 
+            #endregion
 
             #region Configure HTTP Request Pipelines
 
