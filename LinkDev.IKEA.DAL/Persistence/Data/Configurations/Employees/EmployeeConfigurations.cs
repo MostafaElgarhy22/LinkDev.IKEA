@@ -17,6 +17,9 @@ namespace LinkDev.IKEA.DAL.Persistence.Data.Configurations.Employees
             builder.Property(E => E.LastName).HasColumnType("varchar(50)").IsRequired();
             builder.Property(E => E.Email).HasColumnType("varchar(100)");
 
+            builder.Property(E => E.Salary).HasColumnType("decimal(9,2)");
+                
+
             builder.Property(E => E.Gender)
                 .HasConversion(
 

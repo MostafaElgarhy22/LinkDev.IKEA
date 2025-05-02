@@ -26,7 +26,9 @@ namespace LinkDev.IKEA.PL
             var app = builder.Build();
 
             #region Database Initialization
-            app.InitializeDatabase(); 
+
+            app.InitializeDatabase();
+            
             #endregion
 
             #region Configure HTTP Request Pipelines
