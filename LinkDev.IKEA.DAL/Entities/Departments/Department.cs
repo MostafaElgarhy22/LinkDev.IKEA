@@ -6,17 +6,19 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using LinkDev.IKEA.DAL.Common;
 using LinkDev.IKEA.DAL.Common.Entities;
+using LinkDev.IKEA.DAL.Entities.Employees;
 
 namespace LinkDev.IKEA.DAL.Entities.Departments
 {
     public class Department : BaseAuditableEntity<int>
     {
-        public /*required*/ string Name { get; set; }
-        public /*required*/ string Code { get; set; }
+        public required string Name { get; set; }
+        public required string Code { get; set; }
         public string? Description { get; set; }
-
-        [JsonConverter(typeof(DateOnlyJsonConverter))]
         public DateOnly CreationDate { get; set; }
+        public int? ManagerId { get; set; }
+        public virtual Employee? Manager { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
 
     }
 }

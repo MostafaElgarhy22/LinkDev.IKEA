@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace LinkDev.IKEA.DAL.Common
+namespace LinkDev.IKEA.DAL.Common.JsonConverter
 {
     internal class DateOnlyJsonConverter : JsonConverter<DateOnly>
     {
