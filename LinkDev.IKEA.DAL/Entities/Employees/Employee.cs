@@ -1,4 +1,6 @@
-﻿using LinkDev.IKEA.DAL.Common.Entities;
+﻿using LinkDev.IKEA.DAL.Common;
+using System.Text.Json.Serialization;
+using LinkDev.IKEA.DAL.Common.Entities;
 using LinkDev.IKEA.DAL.Common.Enumss;
 using LinkDev.IKEA.DAL.Entities.Departments;
 
