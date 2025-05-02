@@ -23,6 +23,12 @@ namespace LinkDev.IKEA.DAL.Persistence.Data.Configurations.Departments
             builder.Property(D => D.Code).HasColumnType("varchar(10)");
             builder.Property(D => D.Name).HasColumnType("varchar(100)");
             builder.Property(D => D.Description).HasColumnType("varchar(100)");
+
+            // Manage Relationship
+            builder.HasOne(D => D.Manager)
+                .WithOne()
+                .HasForeignKey<Department>(D => D.ManagerId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

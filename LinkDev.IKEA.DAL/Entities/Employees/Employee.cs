@@ -1,5 +1,6 @@
 ﻿using LinkDev.IKEA.DAL.Common.Entities;
 using LinkDev.IKEA.DAL.Common.Enumss;
+using LinkDev.IKEA.DAL.Entities.Departments;
 
 namespace LinkDev.IKEA.DAL.Entities.Employees
 {
@@ -17,5 +18,7 @@ namespace LinkDev.IKEA.DAL.Entities.Employees
         public Gender Gender { get; set; }
         public EmployeeType EmployeeType { get; set; }
         public string? Image { get; set; }
+        public int? DepartmentId { get; set; }
+        public virtual Department? Department { get; set; }
     }
 }
